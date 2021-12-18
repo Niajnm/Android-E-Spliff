@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/dialogButton_increment_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/dialogTextview_counter_id"
+        app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
+        app:layout_constraintStart_toStartOf="@+id/dialogTextview_counter_id"
+        app:srcCompat="@drawable/ic_baseline_add_box_24" />
+
+    <ImageButton
+        android:id="@+id/dialogButton_Decrement_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
+        app:layout_constraintStart_toStartOf="@+id/dialogTextview_counter_id"
+        app:layout_constraintTop_toBottomOf="@+id/dialogTextview_counter_id"
+        app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
+
+    <TextView
+        android:id="@+id/dialogTextview_counter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.182" />
+
+    <Button
+        android:id="@+id/dialogButton_cart_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/dialogButton_Decrement_id"
+        app:layout_constraintStart_toStartOf="@+id/dialogButton_Decrement_id"
+        app:layout_constraintTop_toBottomOf="@+id/dialogButton_Decrement_id" />
+</androidx.constraintlayout.widget.ConstraintLayout>

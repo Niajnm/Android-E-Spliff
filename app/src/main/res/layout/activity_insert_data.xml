@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Database.InsertDataActivity">
+
+
+    <EditText
+        android:id="@+id/edittextID_id"
+        android:layout_width="match_parent"
+        android:hint="ID"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittextTitle_id"
+        android:layout_width="match_parent"
+        android:hint="Title"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittextprice_id"
+        android:layout_width="match_parent"
+        android:hint="Price"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittextDtails_id"
+        android:layout_width="match_parent"
+        android:hint="Details"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittextImgUrl_id"
+        android:layout_width="match_parent"
+        android:hint="Image Url"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAdd_id"
+        android:backgroundTint="@color/teal_200"
+        />
+
+</LinearLayout>
