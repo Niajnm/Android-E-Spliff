@@ -28,10 +28,7 @@ class CartActivity : AppCompatActivity() {
         CArtDisplay()
     }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
     fun CArtDisplay() {
         var databaseHelper = DatabaseHelper(this)
