@@ -39,11 +39,8 @@ class CustomAdapter(var context: Context, var rdata: ArrayList<DataResponse>,val
 
         Picasso.get().load(dataImg).into(holder.imageViewLogo )
 
-
-
         holder.itemView.setOnClickListener {
 
-            //cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc)
             cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc,dataID,dataImg)
         }
 

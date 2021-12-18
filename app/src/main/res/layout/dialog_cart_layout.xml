@@ -15,13 +15,15 @@
         app:layout_constraintBottom_toTopOf="@+id/dialogTextview_counter_id"
         app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
         app:layout_constraintStart_toStartOf="@+id/dialogTextview_counter_id"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
     <ImageButton
         android:id="@+id/dialogButton_Decrement_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
         app:layout_constraintStart_toStartOf="@+id/dialogTextview_counter_id"
         app:layout_constraintTop_toBottomOf="@+id/dialogTextview_counter_id"
@@ -34,18 +36,35 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.446" />
 
     <Button
         android:id="@+id/dialogButton_cart_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:textColor="@color/white"
+        android:background="@drawable/mybag_background"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="@+id/dialogButton_Decrement_id"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="@+id/dialogButton_Decrement_id"
         app:layout_constraintTop_toBottomOf="@+id/dialogButton_Decrement_id" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to cart"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:background="@drawable/grren_back"
+        app:layout_constraintBottom_toTopOf="@+id/dialogButton_increment_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542" />
 </androidx.constraintlayout.widget.ConstraintLayout>
