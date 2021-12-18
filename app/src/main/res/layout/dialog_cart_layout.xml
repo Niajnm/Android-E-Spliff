@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iamgelogo_id"
+        android:layout_width="89dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo" />
 
     <ImageButton
         android:id="@+id/dialogButton_increment_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_gravity="center"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/dialogTextview_counter_id"
         app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
@@ -19,52 +28,46 @@
         app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
+    <TextView
+        android:id="@+id/dialogTextview_counter_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TextView"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.558" />
+
     <ImageButton
         android:id="@+id/dialogButton_Decrement_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
+
         app:layout_constraintEnd_toEndOf="@+id/dialogTextview_counter_id"
         app:layout_constraintStart_toStartOf="@+id/dialogTextview_counter_id"
         app:layout_constraintTop_toBottomOf="@+id/dialogTextview_counter_id"
         app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
 
-    <TextView
-        android:id="@+id/dialogTextview_counter_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446" />
 
     <Button
         android:id="@+id/dialogButton_cart_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="28dp"
-        android:textColor="@color/white"
         android:background="@drawable/mybag_background"
-        android:text="Button"
+
+        android:text="Add"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/dialogButton_Decrement_id"
         app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="@+id/dialogButton_Decrement_id"
         app:layout_constraintTop_toBottomOf="@+id/dialogButton_Decrement_id" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to cart"
-        android:padding="8dp"
-        android:textColor="@color/white"
-        android:background="@drawable/grren_back"
-        app:layout_constraintBottom_toTopOf="@+id/dialogButton_increment_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.542" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

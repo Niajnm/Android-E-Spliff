@@ -32,7 +32,6 @@ class CartAdapter(var context: Context, var rdata: ArrayList<DataResponse>) :
         holder.viewCount.text = rdata[position].cc
 
         val imgData: String?= rdata[position].img
-
         Picasso.get().load(imgData).into(holder.imgProduct )
 
         var count=0

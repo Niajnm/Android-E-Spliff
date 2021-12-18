@@ -27,12 +27,10 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_category)
         setSupportActionBar(toolbar)
 
-
         navigationView = findViewById(R.id.nav_id)
         drawerLayout = findViewById(R.id.drawer_id)
         toolbar = findViewById(R.id.toolbar_id)
        var flowerButton = findViewById<ImageButton>(R.id.imageView_Flower_id)
-
 
         title = ""
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
@@ -65,10 +63,6 @@ class CategoryActivity : AppCompatActivity() {
                     navigationView!!.getMenu().findItem(R.id.menuLogout_id).isVisible = true
                 }
 
-
-
-
-
             }
             true
         })
@@ -100,23 +94,17 @@ class CategoryActivity : AppCompatActivity() {
 
             })
 
-
         builder1.setNegativeButton(
             "No",
             DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
         val alert11: AlertDialog = builder1.create()
         alert11.show()
-
     }
 
     fun LogIn(){
                 val intent = Intent(this, LogInActivity::class.java)
                 startActivity(intent)
                 finish()
-
     }
-
-
-
 }

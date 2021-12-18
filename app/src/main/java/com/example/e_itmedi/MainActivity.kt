@@ -1,11 +1,14 @@
 package com.example.e_itmedi
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -15,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_itmedi.Authentication.LogInActivity
 import com.example.e_itmedi.Database.DataResponse
 import com.example.e_itmedi.Database.DatabaseHelper
 import com.example.e_itmedi.Database.InsertDataActivity
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
     var drawerLayout: DrawerLayout? = null
     var databaseHelper = DatabaseHelper(this)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,39 +51,51 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
         })
 
         setSupportActionBar(toolbar)
-        title = ""
-        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
-        toggle!!.drawerArrowDrawable.color = resources.getColor(R.color.grey)
-        drawerLayout!!.addDrawerListener(toggle!!)
-        toggle!!.syncState()
+        title = "Spliff"
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+
+
+        Display()
+
 
         navigationView!!.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.Profile_ID -> Toast.makeText(this@MainActivity, "Profile", Toast.LENGTH_SHORT)
+                R.id.Profile_ID -> Toast.makeText(this, "Profile", Toast.LENGTH_SHORT)
                     .show()
                 R.id.menuSetting_id -> Toast.makeText(
-                    this@MainActivity,
+                    this,
                     "Settings",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.menuAdmin_id -> startActivity(
-                    Intent(
-                        this@MainActivity,
-                        InsertDataActivity::class.java
+                R.id.menuAdmin_id ->
+                    startActivity(
+                        Intent(this, InsertDataActivity::class.java)
+
                     )
-                )
+                R.id.menuLogout_id -> {
+                    LogOut()
+
+                    navigationView!!.getMenu().findItem(R.id.menuLogIn_id).isVisible = true
+                }
+                R.id.menuLogIn_id-> {
+                    LogIn()
+
+                    navigationView!!.getMenu().findItem(R.id.menuLogout_id).isVisible = true
+                }
+
             }
             true
         })
-        Display()
-
     }
 
     override fun onResume() {
         super.onResume()
         Display()
     }
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        onBackPressed()
+        return true
+    }
     fun Display() {
 
         databaseHelper = DatabaseHelper(this)
@@ -176,6 +193,36 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
             }
         }
     }
+    fun LogOut(){
 
+        val builder1 = AlertDialog.Builder(this)
+        builder1.setMessage("Write your message here.")
+        builder1.setCancelable(true)
+
+        builder1.setPositiveButton(
+            "Yes",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel()
+
+                navigationView!!.getMenu().findItem(R.id.menuLogout_id).setVisible(false)
+
+//                val intent = Intent(this, LogInActivity::class.java)
+//                startActivity(intent)
+//                finish()
+
+            })
+
+        builder1.setNegativeButton(
+            "No",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+
+        val alert11: AlertDialog = builder1.create()
+        alert11.show()
+    }
+
+    fun LogIn(){
+        val intent = Intent(this, LogInActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
 }

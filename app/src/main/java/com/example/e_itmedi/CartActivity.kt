@@ -15,7 +15,6 @@ import com.example.e_itmedi.Database.DatabaseHelper
 import java.util.ArrayList
 class CartActivity : AppCompatActivity() {
 
-
     var recycle: RecyclerView?= null
     var totalView : TextView ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +25,8 @@ class CartActivity : AppCompatActivity() {
         recycle=findViewById(R.id.Cart_recycler)
         totalView= findViewById(R.id.total_tv)
         CArtDisplay()
+
     }
-
-
 
     fun CArtDisplay() {
         var databaseHelper = DatabaseHelper(this)
@@ -67,14 +65,12 @@ class CartActivity : AppCompatActivity() {
         return dataList
     }
 
-
     fun updateTotalPrice(up: Int, productId: String?) {
         var databaseHelper = DatabaseHelper(this)
         val db: SQLiteDatabase = databaseHelper.getWritableDatabase()
 
         db.execSQL("UPDATE Cart SET quantity =quantity+1," + " price =price+$up WHERE id_=$productId ")
         CArtDisplay()
-
     }
 
     fun updateDecrementTotalPrice(up: Int, productId: String?) {
@@ -85,5 +81,4 @@ class CartActivity : AppCompatActivity() {
         CArtDisplay()
 
     }
-
 }
