@@ -2,6 +2,7 @@ package com.example.e_itmedi.Authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
@@ -37,12 +38,12 @@ class LogInActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         })
-        loginbutton!!.setOnClickListener(View.OnClickListener {
+        loginbutton!!.setOnClickListener {
             validationCheck()
             //                loginRequest.setEmail(textLoginmail.getText().toString());
 //                loginRequest.setPassword(textLoginpass.getText().toString());
             logIn()
-        })
+        }
     }
 
     fun validationCheck() {
@@ -77,8 +78,6 @@ class LogInActivity : AppCompatActivity() {
         reqcall!!.enqueue(object : Callback<LoginResponse?> {
 
 
-
-
 //            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
 //                Toast.makeText(this@LogInActivity, "error", Toast.LENGTH_SHORT).show()
 //            }
@@ -86,20 +85,30 @@ class LogInActivity : AppCompatActivity() {
             override fun onResponse(
                 call: Call<LoginResponse?>,
                 response: Response<LoginResponse?>
-            ) { if (response.isSuccessful) {
-//                    Log.d(
-//                        TAG, "onResponse: " + response.body()!!
-//                            .success.token
-//                    )
-                Toast.makeText(this@LogInActivity, "Success....1", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@LogInActivity, CategoryActivity::class.java))
-                finish()
-            }
+            ) {
+                if (response.isSuccessful) {
+
+                    val code = response.code()
+                    val tk = response.body()!!.success?.token
+                    val name = response.body()!!.success?.name
+
+
+                    Toast.makeText(this@LogInActivity, "Success....1", Toast.LENGTH_SHORT).show()
+                    if (code == 200) {
+                        startActivity(Intent(this@LogInActivity, CategoryActivity::class.java))
+                        finish()
+                    }
+
+                }
 
             }
 
             override fun onFailure(call: Call<LoginResponse?>, t: Throwable) {
-                TODO("Not yet implemented")
+
+                Toast.makeText(this@LogInActivity, "error"+t.localizedMessage, Toast.LENGTH_SHORT).show()
+                Log.d("tag",t.localizedMessage)
+
+
             }
 
 

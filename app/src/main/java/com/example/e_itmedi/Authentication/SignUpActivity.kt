@@ -97,19 +97,16 @@ class SignUpActivity : AppCompatActivity() {
     fun signUp() {
         val reqcall = ATservice().registeruser(email, password, cpassword, name)
         reqcall!!.enqueue(object : Callback<ResponseData?> {
-//            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-//
-//            }
 
-//            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-//                Toast.makeText(this@SignUpActivity, "error " + t.message, Toast.LENGTH_SHORT).show()
-//            }
 
             override fun onResponse(call: Call<ResponseData?>, response: Response<ResponseData?>) {
                 if (response.isSuccessful) {
+
+
+                    val tk=response.body()?.success?.token
+                    val name=response.body()?.success?.name
 //                    Log.d(
-//                        TAG, "onResponse: " + response.body()!!
-//                            .success.name
+//                        TAG, "onResponse: " + response.body()!!.success.name
 //                    )
 //                    Log.d(
 //                        TAG, "onResponse: " + response.body()!!

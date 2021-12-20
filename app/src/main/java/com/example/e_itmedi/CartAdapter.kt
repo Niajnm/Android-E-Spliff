@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_itmedi.Database.DataResponse
 import com.squareup.picasso.Picasso
-import java.util.ArrayList
+import java.util.*
 
 class CartAdapter(var context: Context, var rdata: ArrayList<DataResponse>) :
     RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
@@ -28,56 +28,55 @@ class CartAdapter(var context: Context, var rdata: ArrayList<DataResponse>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.viewTitle.text = rdata[position].tt
         holder.viewDesc.text = rdata[position].dd
-        holder.viewPrice.text = "$"+rdata[position].pp
+        holder.viewPrice.text = "$" + rdata[position].pp
         holder.viewCount.text = rdata[position].cc
 
-        val imgData: String?= rdata[position].img
-        Picasso.get().load(imgData).into(holder.imgProduct )
+        val imgData: String? = rdata[position].img
+        Picasso.get().load(imgData).into(holder.imgProduct)
 
-        var count=0
-        var afterPrice =rdata[position].pp!!.toInt()
-        var negPrice:Int=rdata[position].pp!!.toInt()
+        var count = 0
+        var afterPrice = rdata[position].pp!!.toInt()
+        var negPrice: Int = rdata[position].pp!!.toInt()
 
         holder.imgPlus.setOnClickListener(View.OnClickListener {
-            var productId =rdata[position].id
+            var productId = rdata[position].id
             count++
-            var priceFromDB=rdata[position].cc!!.toInt()
-            holder.viewCount.text =(priceFromDB+count).toString()
-            var up=rdata[position].pp!!.toInt()/priceFromDB
+            var priceFromDB = rdata[position].cc!!.toInt()
+            holder.viewCount.text = (priceFromDB + count).toString()
+            var up = rdata[position].pp!!.toInt() / priceFromDB
 
-             afterPrice = afterPrice+up
+            afterPrice = afterPrice + up
 
-            holder.viewPrice.text = "$"+afterPrice
-            negPrice=afterPrice
+            holder.viewPrice.text = "$" + afterPrice
+            negPrice = afterPrice
 
-            ctx.updateTotalPrice(up,productId)
+            ctx.updateTotalPrice(up, productId)
 
         })
 
         holder.imgMinus.setOnClickListener(View.OnClickListener {
-            var productId =rdata[position].id
+            var productId = rdata[position].id
 
-           if ((rdata[position].cc!!.toInt()+count)>1){
+            if ((rdata[position].cc!!.toInt() + count) > 1) {
 
-               count--
+                count--
 
-               var u=rdata[position].cc!!.toInt()
+                var u = rdata[position].cc!!.toInt()
 
-               var up=rdata[position].pp!!.toInt()/u
+                var up = rdata[position].pp!!.toInt() / u
 
-               negPrice =negPrice-up
+                negPrice = negPrice - up
 
-               afterPrice =negPrice
+                afterPrice = negPrice
 
-               val updateCount =(rdata[position].cc!!.toInt() +count).toString()
+                val updateCount = (rdata[position].cc!!.toInt() + count).toString()
 
-               holder.viewCount.text = updateCount
+                holder.viewCount.text = updateCount
 
-               holder.viewPrice.text = "$"+afterPrice
+                holder.viewPrice.text = "$" + afterPrice
 
-               ctx.updateDecrementTotalPrice(up,productId)
-           }
-
+                ctx.updateDecrementTotalPrice(up, productId)
+            }
 
 
         })
@@ -94,7 +93,6 @@ class CartAdapter(var context: Context, var rdata: ArrayList<DataResponse>) :
 ////            cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc,dataID)
 //        }
     }
-
 
 
     override fun getItemCount(): Int {

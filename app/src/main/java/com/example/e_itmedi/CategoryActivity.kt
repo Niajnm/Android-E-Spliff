@@ -21,6 +21,7 @@ class CategoryActivity : AppCompatActivity() {
     var toggle: ActionBarDrawerToggle? = null
     var navigationView: NavigationView? = null
     var drawerLayout: DrawerLayout? = null
+    private var builder: androidx.appcompat.app.AlertDialog.Builder? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -50,7 +51,6 @@ class CategoryActivity : AppCompatActivity() {
                 R.id.menuAdmin_id ->
                     startActivity(
                     Intent(this, InsertDataActivity::class.java)
-
                 )
                 R.id.menuLogout_id -> {
                    LogOut()
@@ -62,13 +62,11 @@ class CategoryActivity : AppCompatActivity() {
 
                     navigationView!!.getMenu().findItem(R.id.menuLogout_id).isVisible = true
                 }
-
             }
             true
         })
 
         flowerButton.setOnClickListener(View.OnClickListener {
-
 
             var intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
@@ -88,10 +86,6 @@ class CategoryActivity : AppCompatActivity() {
 
                 navigationView!!.getMenu().findItem(R.id.menuLogout_id).setVisible(false)
 
-//                val intent = Intent(this, LogInActivity::class.java)
-//                startActivity(intent)
-//                finish()
-
             })
 
         builder1.setNegativeButton(
@@ -107,4 +101,31 @@ class CategoryActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
     }
+
+    override fun onBackPressed() {
+        builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder!!.setTitle("Exit !")
+        builder!!.setMessage("Do you want to exit ?")
+        builder!!.setIcon(R.drawable.ic_baseline_warning_24)
+        builder!!.setPositiveButton("Yes",
+            DialogInterface.OnClickListener { dialog, which -> finish() })
+        builder!!.setNegativeButton("No",
+            DialogInterface.OnClickListener { dialog, which ->
+                Toast.makeText(
+                    this,
+                    "Back to main menu !",
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+        builder!!.setNeutralButton("Minimize",
+            DialogInterface.OnClickListener { dialog, which -> min() })
+        val alertDialog: androidx.appcompat.app.AlertDialog = builder!!.create()
+        alertDialog.show()
+    }
+
+
+    fun min() {
+      onBackPressed()
+    }
+
 }

@@ -15,7 +15,12 @@ import com.example.e_itmedi.Database.DataResponse
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class CustomAdapter(var context: Context, var rdata: ArrayList<DataResponse>,val cellClickListener: CellClickListener ,val dialogListener: DialogListener) :
+class CustomAdapter(
+    var context: Context,
+    var rdata: ArrayList<DataResponse>,
+    val cellClickListener: CellClickListener,
+    val dialogListener: DialogListener
+) :
     RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -28,20 +33,20 @@ class CustomAdapter(var context: Context, var rdata: ArrayList<DataResponse>,val
 
         val dataTitle = rdata[position].tt.toString()
         val dataPrice = rdata[position].pp.toString()
-        val dataDesc= rdata[position].dd.toString()
-        val dataID= rdata[position].id.toString()
+        val dataDesc = rdata[position].dd.toString()
+        val dataID = rdata[position].id.toString()
         val dataImg: String? = rdata[position].img
 
         holder.viewTitle.text = rdata[position].tt
         holder.viewDesc.text = rdata[position].dd
-        holder.viewPrice.text = "$"+rdata[position].pp
+        holder.viewPrice.text = "$" + rdata[position].pp
 
 
-        Picasso.get().load(dataImg).into(holder.imageViewLogo )
+        Picasso.get().load(dataImg).into(holder.imageViewLogo)
 
         holder.itemView.setOnClickListener {
 
-            cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc,dataID,dataImg)
+            cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc, dataID, dataImg)
         }
 
         holder.cartButton.setOnClickListener(View.OnClickListener {
@@ -49,7 +54,7 @@ class CustomAdapter(var context: Context, var rdata: ArrayList<DataResponse>,val
 
             val builder1 = AlertDialog.Builder(context)
             val layoutInflater = LayoutInflater.from(context)
-            val dialogView = layoutInflater.inflate(R.layout.dialog_cart_layout,  null)
+            val dialogView = layoutInflater.inflate(R.layout.dialog_cart_layout, null)
             builder1.setView(dialogView)
             builder1.setCancelable(true)
 
@@ -58,44 +63,46 @@ class CustomAdapter(var context: Context, var rdata: ArrayList<DataResponse>,val
 
             var dialogViewIncrement: ImageButton
             var dialogViewDecrement: ImageButton
-            var dialogtextViewCount : TextView
+            var dialogtextViewCount: TextView
             var dialogCartButton: Button
 
-            dialogViewIncrement=dialogView.findViewById(R.id.dialogButton_increment_id)
-            dialogViewDecrement=dialogView.findViewById(R.id.dialogButton_Decrement_id)
-            dialogtextViewCount=dialogView.findViewById(R.id.dialogTextview_counter_id)
-            dialogCartButton=dialogView.findViewById(R.id.dialogButton_cart_id)
+            dialogViewIncrement = dialogView.findViewById(R.id.dialogButton_increment_id)
+            dialogViewDecrement = dialogView.findViewById(R.id.dialogButton_Decrement_id)
+            dialogtextViewCount = dialogView.findViewById(R.id.dialogTextview_counter_id)
+            dialogCartButton = dialogView.findViewById(R.id.dialogButton_cart_id)
 
             var count = 1
-            dialogtextViewCount.text= count.toString()
+            dialogtextViewCount.text = count.toString()
 
             dialogViewIncrement.setOnClickListener(View.OnClickListener {
 
                 count++
-                dialogtextViewCount.text= count.toString()
-
+                dialogtextViewCount.text = count.toString()
             })
             dialogViewDecrement.setOnClickListener(View.OnClickListener {
 
-                if (count>1){
+                if (count > 1) {
 
                     count--
-                    dialogtextViewCount.text= count.toString()}
-
+                    dialogtextViewCount.text = count.toString()
+                }
             })
 
             dialogCartButton.setOnClickListener(View.OnClickListener {
-                val dataID= rdata[position].id.toString()
+                val dataID = rdata[position].id.toString()
                 val dataPrice = rdata[position].pp.toString()
 
-                dialogListener.onDialogListener(dataTitle,dataPrice,dataDesc,dataID,count,dataImg)
-
-
+                dialogListener.onDialogListener(
+                    dataTitle,
+                    dataPrice,
+                    dataDesc,
+                    dataID,
+                    count,
+                    dataImg
+                )
             })
-
         })
-
-        }
+    }
 
     override fun getItemCount(): Int {
         return rdata.size

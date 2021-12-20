@@ -1,19 +1,20 @@
 package com.example.e_itmedi
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +26,9 @@ import com.example.e_itmedi.Database.InsertDataActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import java.util.*
+import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
+class MainActivity : AppCompatActivity(), CellClickListener, DialogListener {
     var tabLayout: TabLayout? = null
     var recyclerView: RecyclerView? = null
     var buttonMybag: Button? = null
@@ -35,7 +37,9 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
     var navigationView: NavigationView? = null
     var drawerLayout: DrawerLayout? = null
     var databaseHelper = DatabaseHelper(this)
-
+    var customAdapter: CustomAdapter? = null
+    var Rdata = ArrayList<DataResponse>()
+    var newList = ArrayList<DataResponse>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,8 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
         buttonMybag = findViewById(R.id.button_nyBag)
         navigationView = findViewById(R.id.nav_id)
         drawerLayout = findViewById(R.id.drawer_id)
+
+
         buttonMybag!!.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, CartActivity::class.java)
             startActivity(intent)
@@ -54,9 +60,7 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
         title = "Spliff"
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
-
         Display()
-
 
         navigationView!!.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -69,50 +73,96 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
                 ).show()
                 R.id.menuAdmin_id ->
                     startActivity(
-                        Intent(this, InsertDataActivity::class.java)
 
+                        Intent(this, InsertDataActivity::class.java)
                     )
                 R.id.menuLogout_id -> {
                     LogOut()
 
                     navigationView!!.getMenu().findItem(R.id.menuLogIn_id).isVisible = true
                 }
-                R.id.menuLogIn_id-> {
+                R.id.menuLogIn_id -> {
                     LogIn()
-
                     navigationView!!.getMenu().findItem(R.id.menuLogout_id).isVisible = true
                 }
-
             }
             true
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.webmenu_layout, menu)
+
+        val item = menu?.findItem(R.id.menuSearch_id);
+        val searchView = item?.actionView as SearchView
+
+        val filterList = ArrayList<DataResponse>()
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //newList.clear()
+                val searchText = newText!!.toLowerCase(Locale.getDefault())
+
+                if (searchText.isNotEmpty()) {
+                    filterList.clear()
+                    newList.forEach {
+                        if (it.tt!!.toLowerCase().contains(searchText)) {
+                            filterList.add(it)
+                            //newList.add(it)
+                        }
+                    }
+
+                    newList.clear()
+                    newList.addAll(filterList)
+                    recyclerView?.adapter!!.notifyDataSetChanged()
+                } else {
+
+                    newList.clear()
+                    newList.addAll(Rdata)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+                return true
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onResume() {
         super.onResume()
         Display()
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        onBackPressed()
-        return true
-    }
-    fun Display() {
 
-        databaseHelper = DatabaseHelper(this)
-        val sqLiteDatabase = databaseHelper!!.writableDatabase
+    fun Display() {
         val cursor = databaseHelper!!.dsiplayData()
-        val Rdata = loadData(cursor)
-        val customAdapter = CustomAdapter(
-            this@MainActivity, Rdata,this,this)
+        Rdata = loadData(cursor)
+        //newList = Rdata
+        newList.clear()
+        Rdata.forEach {
+            var dataResponse = DataResponse()
+            dataResponse = it
+            newList.add(dataResponse)
+        }
+        //newList.addAll(Rdata)
+        customAdapter = CustomAdapter(
+            this@MainActivity, newList, this, this
+        )
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(this)
+
     }
+
     fun loadData(cursor: Cursor): ArrayList<DataResponse> {
 
-        val dataList: ArrayList<DataResponse> = ArrayList<DataResponse>()
+        val dataList = ArrayList<DataResponse>()
         if (cursor.count == 0) {
 
             Toast.makeText(this@MainActivity, "No data in database", Toast.LENGTH_LONG).show()
+
         } else {
             while (cursor.moveToNext()) {
                 val dataResponse = DataResponse()
@@ -120,15 +170,21 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
                 dataResponse.tt = cursor.getString(1)
                 dataResponse.dd = cursor.getString(2)
                 dataResponse.pp = cursor.getString(3)
-                dataResponse.img= cursor.getString(4)
+                dataResponse.img = cursor.getString(4)
                 dataList.add(dataResponse)
             }
         }
-        return dataList
 
+        return dataList
     }
 
-    override  fun onCellClickListener(Tdata: String?, Pdata: String?, Ddata: String?, IDdata: String?, Imgdata: String?) {
+    override fun onCellClickListener(
+        Tdata: String?,
+        Pdata: String?,
+        Ddata: String?,
+        IDdata: String?,
+        Imgdata: String?
+    ) {
         val intent = Intent(this@MainActivity, ProductDetailsActivity::class.java)
         intent.putExtra("dataTitle", Tdata)
         intent.putExtra("dataPrice", Pdata)
@@ -152,29 +208,36 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
     ) {
 
         val cursor = databaseHelper.CartDsiplayData()
-        val Rdata: ArrayList<DataResponse> = loadData(cursor)
-        Log.d(TAG, "ALLDATA" + Rdata)
-        val cartPrice =Countdata.times(Pdata!!.toInt())
-        if (Rdata.isEmpty()) {
+        val cartRdata: ArrayList<DataResponse> = loadData(cursor)
+        Log.d(TAG, "ALLDATA" + cartRdata)
+        val cartPrice = Countdata.times(Pdata!!.toInt())
+        if (cartRdata.isEmpty()) {
 
-            databaseHelper?.insertCartData(Tdata, IDdata, cartPrice.toString(), Ddata, Countdata.toString(),Imgdata)
+            databaseHelper?.insertCartData(
+                Tdata,
+                IDdata,
+                cartPrice.toString(),
+                Ddata,
+                Countdata.toString(),
+                Imgdata
+            )
 
-        }
-        else {
-            for (i in Rdata.indices) {
+        } else {
+            for (i in cartRdata.indices) {
 
-                Log.d(TAG, "check" + Rdata[i].id)
+                Log.d(TAG, "check" + cartRdata[i].id)
 
-                if (IDdata == Rdata[i].id) {
+                if (IDdata == cartRdata[i].id) {
                     Toast.makeText(this, "update", Toast.LENGTH_SHORT).show()
                     // databaseHelper!!.updateCartData(title,cartID,price,type,count.toString())
                     val db: SQLiteDatabase = databaseHelper.getWritableDatabase()
                     var updateprice = Countdata.times(Pdata!!.toInt())
-                    db.execSQL("UPDATE Cart SET quantity =quantity+$Countdata," +
-                            " price =price+$updateprice WHERE id_=$IDdata ")
+                    db.execSQL(
+                        "UPDATE Cart SET quantity =quantity+$Countdata," +
+                                " price =price+$updateprice WHERE id_=$IDdata "
+                    )
                     break
-                }
-                else {
+                } else {
 
                     val rowid = databaseHelper!!.insertCartData(
                         Tdata,
@@ -183,8 +246,8 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
                         Ddata,
                         Countdata.toString(),
                         Imgdata
-
                     )
+
                     if (rowid > -1) {
                         Toast.makeText(this, "$rowid Item Added", Toast.LENGTH_SHORT)
                             .show()
@@ -193,7 +256,8 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
             }
         }
     }
-    fun LogOut(){
+
+    fun LogOut() {
 
         val builder1 = AlertDialog.Builder(this)
         builder1.setMessage("Write your message here.")
@@ -201,13 +265,10 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
 
         builder1.setPositiveButton(
             "Yes",
-            DialogInterface.OnClickListener { dialog, id -> dialog.cancel()
+            DialogInterface.OnClickListener { dialog, id ->
+                dialog.cancel()
 
                 navigationView!!.getMenu().findItem(R.id.menuLogout_id).setVisible(false)
-
-//                val intent = Intent(this, LogInActivity::class.java)
-//                startActivity(intent)
-//                finish()
 
             })
 
@@ -219,10 +280,11 @@ class MainActivity : AppCompatActivity(), CellClickListener,DialogListener {
         alert11.show()
     }
 
-    fun LogIn(){
+    fun LogIn() {
         val intent = Intent(this, LogInActivity::class.java)
         startActivity(intent)
         finish()
     }
+
 
 }

@@ -13,17 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_itmedi.Database.DataResponse
 import com.example.e_itmedi.Database.DatabaseHelper
 import java.util.ArrayList
+
 class CartActivity : AppCompatActivity() {
 
-    var recycle: RecyclerView?= null
-    var totalView : TextView ? = null
+    var recycle: RecyclerView? = null
+    var totalView: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        recycle=findViewById(R.id.Cart_recycler)
-        totalView= findViewById(R.id.total_tv)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        recycle = findViewById(R.id.Cart_recycler)
+        totalView = findViewById(R.id.total_tv)
         CArtDisplay()
 
     }
@@ -36,11 +37,11 @@ class CartActivity : AppCompatActivity() {
         recycle!!.adapter = cartAdapter
         recycle!!.layoutManager = LinearLayoutManager(this)
 
-        var sum=0
-        for (i in Rdata.indices){
+        var sum = 0
+        for (i in Rdata.indices) {
             sum = sum!! + Rdata[i].pp!!.toInt()
         }
-        totalView!!.text= "Total $ $sum"
+        totalView!!.text = "Total $ $sum"
         Log.d(TAG, "CArtDisplay: $sum")
 
     }
