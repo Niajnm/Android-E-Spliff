@@ -1,10 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.EITmedi" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <style name="Theme.EITmedi" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">#76AEB5B3</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
 
@@ -15,8 +16,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorControlNormal">@color/black</item>
-    </style>
+
 
 </resources>

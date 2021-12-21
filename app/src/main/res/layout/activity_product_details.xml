@@ -192,6 +192,15 @@ android:background="@drawable/details_back"
             app:layout_constraintTop_toBottomOf="@+id/textView_details_id"
             app:layout_constraintVertical_bias="0.584" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/detail_Price_id"
+            app:layout_constraintEnd_toEndOf="@+id/detail_Price_id"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_share_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

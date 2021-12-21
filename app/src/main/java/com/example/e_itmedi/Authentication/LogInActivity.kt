@@ -1,7 +1,11 @@
 package com.example.e_itmedi.Authentication
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.util.Log
 import android.util.Patterns
 import android.view.View
@@ -12,12 +16,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_itmedi.Authentication.APIClient.ATservice
 import com.example.e_itmedi.CategoryActivity
+import com.example.e_itmedi.Database.DataResponse
 import com.example.e_itmedi.Login.LoginResponse
-import com.example.e_itmedi.MainActivity
 import com.example.e_itmedi.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LogInActivity : AppCompatActivity() {
     var textViewCreatAc: TextView? = null
@@ -26,6 +31,8 @@ class LogInActivity : AppCompatActivity() {
     var loginbutton: Button? = null
     var email: String? = null
     var pass: String? = null
+    lateinit var name :String
+    var sharedpreferences: SharedPreferences? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
@@ -33,11 +40,13 @@ class LogInActivity : AppCompatActivity() {
         textLoginmail = findViewById(R.id.editTextEmailAddress_Login)
         textLoginpass = findViewById(R.id.editTextPassword_Login)
         loginbutton = findViewById(R.id.button_Login)
+
         textViewCreatAc!!.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@LogInActivity, SignUpActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             finish()
         })
+
         loginbutton!!.setOnClickListener {
             validationCheck()
             //                loginRequest.setEmail(textLoginmail.getText().toString());
@@ -66,8 +75,8 @@ class LogInActivity : AppCompatActivity() {
             textLoginpass!!.requestFocus()
             return
         }
-        if (pass!!.length < 6) {
-            textLoginpass!!.error = "Password Length Must be 6 Digits"
+        if (pass!!.length < 4) {
+            textLoginpass!!.error = "Password Length Must be 4 Digits"
             textLoginpass!!.requestFocus()
             return
         }
@@ -89,8 +98,16 @@ class LogInActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
 
                     val code = response.code()
-                    val tk = response.body()!!.success?.token
-                    val name = response.body()!!.success?.name
+                    val tk = response.body()!!.success?.token.toString()
+
+
+
+                    sharedpreferences = getSharedPreferences("MyPREFERENCES", 0)
+                    val editor = sharedpreferences!!.edit()
+
+                    editor.putString("UserToken", tk)
+
+                    editor.commit()
 
 
                     Toast.makeText(this@LogInActivity, "Success....1", Toast.LENGTH_SHORT).show()

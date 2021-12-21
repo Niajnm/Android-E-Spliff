@@ -13,14 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EITmedi"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name="Navdrawer.ProfileActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".Database.InsertDataActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".Authentication.SignUpActivity" />
         <activity android:name=".Authentication.LogInActivity" />
-        <activity android:name=".FirstActivity" />
-        <activity android:name=".CategoryActivity">
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -82,7 +82,7 @@ class SignUpActivity : AppCompatActivity() {
             spass!!.requestFocus()
             return
         }
-        if (password!!.length < 6) {
+        if (password!!.length < 4) {
             spass!!.error = "Password Length Must be 6 Digits"
             spass!!.requestFocus()
             return

@@ -11,21 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.e_itmedi.Database.DataResponse
 import com.example.e_itmedi.Database.DatabaseHelper
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_product_details.*
 import java.util.*
 
 class ProductDetailsActivity : AppCompatActivity() {
 
-    var titleView: TextView? = null
-    var priceView: TextView? = null
-    var productImg: ImageView? = null
-
-    var typeView: TextView? = null
-    var quantity: TextView? = null
-    var totalPrice: TextView? = null
-    var increment: ImageView? = null
-    var decrement: ImageView? = null
-    var cartList: ImageButton? = null
-    var backButton: ImageView?=null
     private val TAG = "ProductDetailsActivity"
     var title: String? = null
     var price: String? = null
@@ -34,22 +24,13 @@ class ProductDetailsActivity : AppCompatActivity() {
     var ImgUrl: String? = null
     var count: Int = 1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         var databaseHelper = DatabaseHelper(this)
         getActionBar()?.setDisplayHomeAsUpEnabled(true)
-        titleView = findViewById(R.id.detail_Title_id)
-        priceView = findViewById(R.id.detail_Price_id)
-        typeView = findViewById(R.id.detail_Type_id)
-        increment = findViewById(R.id.image_increment_id)
-        decrement = findViewById(R.id.Image_Decrement_id)
-        quantity = findViewById(R.id.textView_Quantity_id)
-        cartList = findViewById(R.id.imageView_Cart)
-        backButton = findViewById(R.id.imageView_backButton_id)
-        totalPrice = findViewById(R.id.textView_Total_id)
-        productImg = findViewById(R.id.imageViewProduct_id)
+
+
 
         val buttonOrder = findViewById<Button>(R.id.button_Cart_id)
         val intent = intent
@@ -59,12 +40,12 @@ class ProductDetailsActivity : AppCompatActivity() {
         cartID = intent.getStringExtra("dataID")
         ImgUrl = intent.getStringExtra("dataImg")
 
-        titleView?.setText(title)
-        priceView?.setText("$$price")
-        typeView?.setText(type)
+        detail_Title_id?.setText(title)
+        detail_Price_id?.setText("$$price")
+        detail_Type_id?.setText(type)
 
-        totalPrice!!.text="$$price"
-        Picasso.get().load(ImgUrl).into(productImg)
+        textView_Total_id!!.text="$$price"
+        Picasso.get().load(ImgUrl).into(imageViewProduct_id)
 
         buttonOrder.setOnClickListener(View.OnClickListener {
             Log.d(TAG,"UUUUU" + cartID)
@@ -110,26 +91,26 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         })
 
-        increment!!.setOnClickListener(View.OnClickListener {
+        image_increment_id!!.setOnClickListener(View.OnClickListener {
             count++
 
-            quantity!!.text = count.toString()
-            totalPrice!!.text= "$"+count.times(price!!.toInt()).toString()
+            textView_Quantity_id!!.text = count.toString()
+            textView_Total_id!!.text= "$"+count.times(price!!.toInt()).toString()
 
         })
-        decrement?.setOnClickListener(View.OnClickListener {
+        Image_Decrement_id?.setOnClickListener(View.OnClickListener {
             if (count >1) {
                 count--
-                quantity!!.text = (count.toString())
-                totalPrice!!.text= "$"+count.times(price!!.toInt()).toString()
+                textView_Quantity_id!!.text = (count.toString())
+                textView_Total_id!!.text= "$"+count.times(price!!.toInt()).toString()
             }
         })
 
-        cartList!!.setOnClickListener(View.OnClickListener {
+        imageView_Cart!!.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         })
-        backButton!!.setOnClickListener(View.OnClickListener {
+        imageView_backButton_id!!.setOnClickListener(View.OnClickListener {
            onBackPressed()
         })
 

@@ -8,12 +8,13 @@
     android:padding="5dp"
     tools:context=".CartActivity">
 
- <ImageView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:src="@drawable/ic_baseline_arrow_back_ios_24"
 
-     />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cartToolbar_id"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

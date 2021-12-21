@@ -7,9 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,14 +23,14 @@ import com.example.e_itmedi.Database.DatabaseHelper
 import com.example.e_itmedi.Database.InsertDataActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), CellClickListener, DialogListener {
     var tabLayout: TabLayout? = null
-    var recyclerView: RecyclerView? = null
-    var buttonMybag: Button? = null
-    var toolbar: Toolbar? = null
+
+
     var toggle: ActionBarDrawerToggle? = null
     var navigationView: NavigationView? = null
     var drawerLayout: DrawerLayout? = null
@@ -44,22 +42,23 @@ class MainActivity : AppCompatActivity(), CellClickListener, DialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar = findViewById(R.id.toolbar_id)
-        recyclerView = findViewById(R.id.recycler)
-        buttonMybag = findViewById(R.id.button_nyBag)
+
         navigationView = findViewById(R.id.nav_id)
         drawerLayout = findViewById(R.id.drawer_id)
 
-
-        buttonMybag!!.setOnClickListener(View.OnClickListener {
+        button_nyBag.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, CartActivity::class.java)
             startActivity(intent)
         })
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_id)
         title = "Spliff"
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-
+        toolbar_id!!.setNavigationOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onBackPressed()
+            }
+        })
         Display()
 
         navigationView!!.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
@@ -112,18 +111,18 @@ class MainActivity : AppCompatActivity(), CellClickListener, DialogListener {
                     newList.forEach {
                         if (it.tt!!.toLowerCase().contains(searchText)) {
                             filterList.add(it)
-                            //newList.add(it)
+
                         }
                     }
 
                     newList.clear()
                     newList.addAll(filterList)
-                    recyclerView?.adapter!!.notifyDataSetChanged()
+                    recycler?.adapter!!.notifyDataSetChanged()
                 } else {
 
                     newList.clear()
                     newList.addAll(Rdata)
-                    recyclerView?.adapter?.notifyDataSetChanged()
+                    recycler?.adapter?.notifyDataSetChanged()
                 }
                 return true
             }
@@ -151,8 +150,8 @@ class MainActivity : AppCompatActivity(), CellClickListener, DialogListener {
         customAdapter = CustomAdapter(
             this@MainActivity, newList, this, this
         )
-        recyclerView!!.adapter = customAdapter
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
+        recycler!!.adapter = customAdapter
+        recycler!!.layoutManager = LinearLayoutManager(this)
 
     }
 

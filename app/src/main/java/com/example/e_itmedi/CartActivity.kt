@@ -5,37 +5,48 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_itmedi.Database.DataResponse
 import com.example.e_itmedi.Database.DatabaseHelper
-import java.util.ArrayList
+import kotlinx.android.synthetic.main.activity_cart.*
+import java.util.*
 
 class CartActivity : AppCompatActivity() {
 
-    var recycle: RecyclerView? = null
+
     var totalView: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        recycle = findViewById(R.id.Cart_recycler)
+
         totalView = findViewById(R.id.total_tv)
-        CArtDisplay()
+
+        cartToolbar_id.setNavigationOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onBackPressed()
+            }
+        })
+        
+        cartdisplay()
 
     }
 
-    fun CArtDisplay() {
+    fun cartdisplay() {
         var databaseHelper = DatabaseHelper(this)
         val cursor = databaseHelper!!.CartDsiplayData()
         val Rdata = loadDataCart(cursor)
         val cartAdapter = CartAdapter(this, Rdata)
-        recycle!!.adapter = cartAdapter
-        recycle!!.layoutManager = LinearLayoutManager(this)
+        Cart_recycler.adapter = cartAdapter
+        Cart_recycler.layoutManager = LinearLayoutManager(this)
 
         var sum = 0
         for (i in Rdata.indices) {
@@ -71,7 +82,7 @@ class CartActivity : AppCompatActivity() {
         val db: SQLiteDatabase = databaseHelper.getWritableDatabase()
 
         db.execSQL("UPDATE Cart SET quantity =quantity+1," + " price =price+$up WHERE id_=$productId ")
-        CArtDisplay()
+        cartdisplay()
     }
 
     fun updateDecrementTotalPrice(up: Int, productId: String?) {
@@ -79,7 +90,7 @@ class CartActivity : AppCompatActivity() {
         val db: SQLiteDatabase = databaseHelper.getWritableDatabase()
 
         db.execSQL("UPDATE Cart SET quantity =quantity-1," + " price =price-$up WHERE id_=$productId ")
-        CArtDisplay()
+        cartdisplay()
 
     }
 }
