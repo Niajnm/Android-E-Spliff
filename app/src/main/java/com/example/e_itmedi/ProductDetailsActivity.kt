@@ -91,7 +91,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         })
 
-        image_increment_id!!.setOnClickListener(View.OnClickListener {
+        image_increment_id!!.setOnClickListener( {
             count++
 
             textView_Quantity_id!!.text = count.toString()
@@ -106,11 +106,11 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         })
 
-        imageView_Cart!!.setOnClickListener(View.OnClickListener {
+        imageView_Cart!!.setOnClickListener( {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         })
-        imageView_backButton_id!!.setOnClickListener(View.OnClickListener {
+        imageView_backButton_id!!.setOnClickListener({
            onBackPressed()
         })
 

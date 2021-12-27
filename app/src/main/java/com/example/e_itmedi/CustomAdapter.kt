@@ -41,7 +41,6 @@ class CustomAdapter(
         holder.viewDesc.text = rdata[position].dd
         holder.viewPrice.text = "$" + rdata[position].pp
 
-
         Picasso.get().load(dataImg).into(holder.imageViewLogo)
 
         holder.itemView.setOnClickListener {
@@ -74,12 +73,12 @@ class CustomAdapter(
             var count = 1
             dialogtextViewCount.text = count.toString()
 
-            dialogViewIncrement.setOnClickListener(View.OnClickListener {
+            dialogViewIncrement.setOnClickListener({
 
                 count++
                 dialogtextViewCount.text = count.toString()
             })
-            dialogViewDecrement.setOnClickListener(View.OnClickListener {
+            dialogViewDecrement.setOnClickListener({
 
                 if (count > 1) {
 
@@ -88,7 +87,7 @@ class CustomAdapter(
                 }
             })
 
-            dialogCartButton.setOnClickListener(View.OnClickListener {
+            dialogCartButton.setOnClickListener({
                 val dataID = rdata[position].id.toString()
                 val dataPrice = rdata[position].pp.toString()
 
