@@ -48,7 +48,7 @@ class CustomAdapter(
             cellClickListener.onCellClickListener(dataTitle, dataPrice, dataDesc, dataID, dataImg)
         }
 
-        holder.cartButton.setOnClickListener(View.OnClickListener {
+        holder.cartButton.setOnClickListener{
 
 
             val builder1 = AlertDialog.Builder(context)
@@ -73,21 +73,21 @@ class CustomAdapter(
             var count = 1
             dialogtextViewCount.text = count.toString()
 
-            dialogViewIncrement.setOnClickListener({
+            dialogViewIncrement.setOnClickListener{
 
                 count++
                 dialogtextViewCount.text = count.toString()
-            })
-            dialogViewDecrement.setOnClickListener({
+            }
+            dialogViewDecrement.setOnClickListener{
 
                 if (count > 1) {
 
                     count--
                     dialogtextViewCount.text = count.toString()
                 }
-            })
+            }
 
-            dialogCartButton.setOnClickListener({
+            dialogCartButton.setOnClickListener{
                 val dataID = rdata[position].id.toString()
                 val dataPrice = rdata[position].pp.toString()
 
@@ -99,8 +99,8 @@ class CustomAdapter(
                     count,
                     dataImg
                 )
-            })
-        })
+            }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -93,12 +93,11 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         image_increment_id!!.setOnClickListener( {
             count++
-
             textView_Quantity_id!!.text = count.toString()
             textView_Total_id!!.text= "$"+count.times(price!!.toInt()).toString()
-
         })
-        Image_Decrement_id?.setOnClickListener(View.OnClickListener {
+
+        Image_Decrement_id?.setOnClickListener( {
             if (count >1) {
                 count--
                 textView_Quantity_id!!.text = (count.toString())
@@ -110,6 +109,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         })
+
         imageView_backButton_id!!.setOnClickListener({
            onBackPressed()
         })
